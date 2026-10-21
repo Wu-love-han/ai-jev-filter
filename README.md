@@ -1,5 +1,7 @@
 # JEV 检索台 · 2 版
 
+[![CI](https://github.com/Wu-love-han/ai-jev-filter/actions/workflows/ci.yml/badge.svg)](https://github.com/Wu-love-han/ai-jev-filter/actions/workflows/ci.yml)
+
 > 用**对话**的方式筛选真实信息：先问清需求 → 多平台检索 → 用开源 **JEV（TypeSafe System One）** 判断模型验真、打分、排序 → 把带链接的摘要推给你。
 > 目标用户是新手：界面里每一步都展开给你看，框架意识在看的过程中长出来。
 

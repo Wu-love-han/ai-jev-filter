@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Node ${{ matrix.node }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['18', '20', '22']
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: 语法检查（所有 JS）
+        run: |
+          set -e
+          for f in js/*.js server/*.js tools/*.js; do
+            echo "check $f"
+            node --check "$f"
+          done
+
+      - name: 冒烟测试（脱敏 / 协议层 / 三后端 / 流水线）
+        run: node tools/smoke-test.js
+
+      - name: 代理端到端测试（自带假上游，不联网）
+        run: node tools/proxy-test.js
