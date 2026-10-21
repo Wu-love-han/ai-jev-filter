@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="JEV 检索台 —— 用对话的方式筛选真实信息：主动追问需求、多平台检索、JEV 原子判定、打分排序、摘要推送。">
+<title>JEV 检索台 · 新手的信息筛选工作台</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f6bff'/%3E%3Cpath d='M9 21V11h2.6v10zm5.2 0V11h8v2.4h-5.4v1.8h4.7v2.4h-4.7v3.4z' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/panels.css">
+</head>
+<body>
+
+<!-- ============ 内联图标库 ============ -->
+<svg class="svg-sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M4.5 11.7 20 4.5l-3.9 15.2-4.4-6.1z"/><path d="M11.7 13.6 20 4.5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.1"/><path d="M20.4 20.4l-4.7-4.7"/></symbol>
+  <symbol id="i-github" viewBox="0 0 24 24"><path d="M9.3 20.4c-4.2 1.2-4.2-2.1-5.9-2.6m11.8 5v-3.3c0-1.1-.2-1.7-.7-2.2 2.5-.3 4.4-1.3 4.4-5a3.9 3.9 0 0 0-1.1-2.7 3.6 3.6 0 0 0-.1-2.7s-.9-.3-3 1.1a10.4 10.4 0 0 0-5.2 0C7.4 6.6 6.5 6.9 6.5 6.9a3.6 3.6 0 0 0-.1 2.7 3.9 3.9 0 0 0-1.1 2.7c0 3.7 1.9 4.7 4.4 5-.5.5-.6 1.1-.6 2.1v3.3"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7.4 17.6h9.3a3.8 3.8 0 0 0 .4-7.6A5.6 5.6 0 0 0 6.4 11.6a3.1 3.1 0 0 0 1 6z"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.2"/><path d="M3.8 12h16.4M12 3.8c3.2 3.4 3.2 12.9 0 16.4M12 3.8c-3.2 3.4-3.2 12.9 0 16.4"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6.4 3.4h7.2l4 4v13.2H6.4z"/><path d="M13.6 3.4v4h4M9.4 12.4h5.2M9.4 16h5.2"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3.4l7 3v5.7c0 4.1-3 7.2-7 8.9-4-1.7-7-4.8-7-8.9V6.4z"/><path d="M9 12.1l2.3 2.2 4-4.2"/></symbol>
+  <symbol id="i-scales" viewBox="0 0 24 24"><path d="M12 3.8v16.4M7.4 7.6h9.2M7.4 7.6L4.4 14h6zM16.6 7.6L13.6 14h6z"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3.4l1.9 5.5 5.5 1.9-5.5 1.9L12 18.2l-1.9-5.5L4.6 10.8l5.5-1.9z"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.1"/><path d="M19.4 14.2a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-2.9 1.2v.2a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-2.9-1.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0-1.2-2.9h-.2a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.3-2.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 2.9-1.2v-.2a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 2.9 1.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0 1.2 2.9h.2a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.2"/><path d="M9.6 9.4a2.5 2.5 0 1 1 3.6 2.3c-.7.4-1.2 1-1.2 1.8v.3"/><path d="M12 17.2h.01"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4.6 6.6h14.8M9.4 6.6V4.8h5.2v1.8M7 6.6l.9 13h8.2l.9-13"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10.4 13.6a3.6 3.6 0 0 0 5.1 0l3-3a3.6 3.6 0 0 0-5.1-5.1l-1.7 1.7"/><path d="M13.6 10.4a3.6 3.6 0 0 0-5.1 0l-3 3a3.6 3.6 0 0 0 5.1 5.1l1.7-1.7"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.6" y="8.6" width="11" height="11" rx="2"/><path d="M15.4 8.6V6.6a2 2 0 0 0-2-2H6.6a2 2 0 0 0-2 2v6.8a2 2 0 0 0 2 2h2"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4.6 5.4a2 2 0 0 1 2-2h4.2v15.2H6.6a2 2 0 0 0-2 2z"/><path d="M19.4 5.4a2 2 0 0 0-2-2h-4.2v15.2h4.2a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M4.6 12.6l4.6 4.6 10.2-10.4"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="M8.6 10l3.4 3.4L15.4 10"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11.4a8 8 0 1 0-1.1 5.4"/><path d="M20 4.6v6.8h-6.8"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 13.4A8.2 8.2 0 0 1 10.6 4 8.2 8.2 0 1 0 20 13.4z"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.2"/><circle cx="12" cy="12" r="3.1"/></symbol>
+  <symbol id="i-branch" viewBox="0 0 24 24"><circle cx="7" cy="6" r="2.2"/><circle cx="7" cy="18" r="2.2"/><circle cx="17" cy="12" r="2.2"/><path d="M7 8.2v7.6M9.2 6h2.8a3 3 0 0 1 3 3v1"/></symbol>
+  <symbol id="i-bubble" viewBox="0 0 24 24"><path d="M4.5 5.2h15v10.6H10l-5.5 4.2z"/></symbol>
+  <symbol id="i-cards" viewBox="0 0 24 24"><rect x="3.4" y="5" width="17.2" height="11.4" rx="2.2"/><path d="M8 20h8"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4.2l8.4 15.2H3.6z"/><path d="M12 9.6v4.2M12 16.8h.01"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4.6v10.6M7.6 11l4.4 4.4L16.4 11M5 19.4h14"/></symbol>
+</svg>
+
+<!-- ============ 应用外壳 ============ -->
+<div id="app">
+
+  <!-- 顶栏 -->
+  <header class="topbar">
+    <button class="icon-btn menu-btn" id="btnSidebarToggle" type="button" title="会话与知识库">
+      <svg class="ic" width="17" height="17"><use href="#i-bubble"/></svg>
+    </button>
+    <div class="brand">
+      <span class="brand-mark"><svg class="ic" width="18" height="18"><use href="#i-scales"/></svg></span>
+      <div class="brand-text">
+        <strong>JEV 检索台</strong>
+        <span class="brand-sub">新手的信息筛选工作台 · 2 版</span>
+      </div>
+    </div>
+
+    <div class="topbar-badges">
+      <button class="badge" id="badgeMode" type="button" title="点击在「演示数据」与「实时检索」之间切换">
+        <svg class="ic" width="13" height="13"><use href="#i-globe"/></svg><span id="badgeModeText">演示数据</span>
+      </button>
+      <button class="badge badge-judge" id="badgeJev" type="button" title="点击查看 JEV 判定后端设置">
+        <svg class="ic" width="13" height="13"><use href="#i-scales"/></svg><span id="badgeJevText">JEV · 本地模拟</span>
+      </button>
+      <button class="badge badge-kb" id="badgeKb" type="button" title="管理知识库">
+        <svg class="ic" width="13" height="13"><use href="#i-book"/></svg><span id="badgeKbText">知识库 3 个</span>
+      </button>
+    </div>
+
+    <div class="topbar-actions">
+      <button class="icon-btn" id="btnTheme" type="button" title="切换深色 / 浅色">
+        <svg class="ic" width="17" height="17"><use href="#i-moon"/></svg>
+      </button>
+      <button class="icon-btn" id="btnHelp" type="button" title="怎么用">
+        <svg class="ic" width="17" height="17"><use href="#i-help"/></svg>
+      </button>
+      <button class="icon-btn" id="btnPanelToggle" type="button" title="显示 / 隐藏提示词面板">
+        <svg class="ic" width="17" height="17"><use href="#i-spark"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- 主体三栏 -->
+  <div class="layout">
+
+    <!-- 左栏 -->
+    <aside class="sidebar" id="sidebar">
+      <button class="btn btn-primary new-chat" id="btnNewChat" type="button">
+        <svg class="ic" width="16" height="16"><use href="#i-plus"/></svg><span>新建对话</span>
+      </button>
+
+      <div class="side-section">
+        <div class="side-title">会话历史</div>
+        <div class="chat-list" id="chatList"></div>
+      </div>
+
+      <div class="side-section side-section-grow">
+        <div class="side-title">
+          我的知识库
+          <button class="text-btn" id="btnKbManager" type="button">管理</button>
+        </div>
+        <div class="kb-list" id="kbList"></div>
+        <button class="btn btn-ghost btn-block" id="btnNewKb" type="button">
+          <svg class="ic" width="15" height="15"><use href="#i-plus"/></svg><span>新建知识库</span>
+        </button>
+      </div>
+
+      <div class="side-foot">
+        <div class="foot-line"><span class="dot dot-ok"></span>本地运行 · 无需安装</div>
+        <div class="foot-line foot-muted">v2.1.0 · 数据只在你的浏览器里</div>
+      </div>
+    </aside>
+
+    <!-- 中栏：对话 -->
+    <main class="main" id="main">
+      <div class="thread" id="thread">
+        <div class="thread-inner" id="threadInner">
+
+          <!-- 欢迎页 -->
+          <section class="welcome" id="welcome">
+            <div class="welcome-hero">
+              <h1>把「搜到的」变成「验过的」</h1>
+              <p>
+                告诉我你要找什么。我会先问清楚需求，再去 GitHub、网盘等平台检索，
+                用 <b>JEV 判断模型</b>给每条信息验真、打分、排序，最后把带链接的摘要推给你。
+              </p>
+            </div>
+
+            <div class="welcome-steps">
+              <div class="wstep"><span class="wstep-n">1</span><b>问清需求</b><i>主动追问，别让你白搜</i></div>
+              <div class="wstep"><span class="wstep-n">2</span><b>多源检索</b><i>GitHub / 网页 / 网盘 / 知识库</i></div>
+              <div class="wstep"><span class="wstep-n">3</span><b>JEV 判定</b><i>真伪 · 匹配度 · 分类</i></div>
+              <div class="wstep"><span class="wstep-n">4</span><b>摘要交付</b><i>带链接，可跳转，可入库</i></div>
+            </div>
+
+            <div class="starter-grid" id="starterGrid"></div>
+
+            <div class="welcome-note">
+              <svg class="ic" width="15" height="15"><use href="#i-shield"/></svg>
+              <span>读取与展示前会自动<strong>脱敏</strong>（手机号 / 身份证 / 邮箱 / 微信号），发现即屏蔽并告知你。请不要在输入框里填写真实个人隐私。</span>
+            </div>
+          </section>
+
+          <!-- 消息流 -->
+          <div class="messages" id="messages"></div>
+        </div>
+      </div>
+
+      <!-- 输入区 -->
+      <div class="composer-wrap">
+        <div class="composer" id="composer">
+          <div class="composer-chips" id="sourceChips">
+            <button class="src-chip" type="button" data-src="github">
+              <svg class="ic" width="13" height="13"><use href="#i-github"/></svg>GitHub
+            </button>
+            <button class="src-chip" type="button" data-src="web">
+              <svg class="ic" width="13" height="13"><use href="#i-globe"/></svg>百科 / 网页
+            </button>
+            <button class="src-chip" type="button" data-src="pan">
+              <svg class="ic" width="13" height="13"><use href="#i-cloud"/></svg>网盘
+            </button>
+            <button class="src-chip" type="button" data-src="kb">
+              <svg class="ic" width="13" height="13"><use href="#i-book"/></svg>知识库
+            </button>
+            <span class="composer-chips-hint">点一下可开关数据源</span>
+          </div>
+
+          <div class="composer-box">
+            <textarea id="input" rows="1" placeholder="例如：找几个适合新手学 AI Agent 工作流的开源项目，最好有中文文档，最近还在更新……" maxlength="2000"></textarea>
+            <div class="composer-side">
+              <span class="char-count" id="charCount"></span>
+              <button class="send-btn" id="btnSend" type="button" title="发送（Enter）">
+                <svg class="ic" width="18" height="18"><use href="#i-send"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="composer-hint" id="composerHint">
+            <span>Enter 发送 · Shift + Enter 换行</span>
+            <span class="composer-hint-sep">·</span>
+            <span id="clarifyHint">问得越具体，JEV 判定越准</span>
+          </div>
+        </div>
+        <p class="disclaimer">检索结果来自公开平台，已做脱敏与存活核验；网盘类资源为第三方转载，采信前请自行核对。</p>
+      </div>
+    </main>
+
+    <!-- 右栏：提示词工作台 -->
+    <aside class="panel" id="panel">
+      <div class="panel-head">
+        <div class="panel-tabs" id="panelTabs">
+          <button class="ptab is-active" type="button" data-tab="prompts">提示词</button>
+          <button class="ptab" type="button" data-tab="settings">检索设置</button>
+          <button class="ptab" type="button" data-tab="learn">框架小课</button>
+        </div>
+        <button class="icon-btn icon-btn-sm" id="btnPanelClose" type="button" title="收起面板">
+          <svg class="ic" width="15" height="15"><use href="#i-x"/></svg>
+        </button>
+      </div>
+
+      <!-- 提示词模板 -->
+      <div class="panel-body" id="tabPrompts">
+        <div class="panel-intro">
+          <p><b>点一下就能用。</b>这些是模板化提示词 —— 填空即检索，也可以改成你自己的。</p>
+          <div class="seg" id="promptClickMode">
+            <button class="seg-btn is-active" type="button" data-click="send">点击直接检索</button>
+            <button class="seg-btn" type="button" data-click="fill">仅填入输入框</button>
+          </div>
+        </div>
+        <div id="promptGroups" class="prompt-groups"></div>
+        <button class="btn btn-ghost btn-block" id="btnAddPrompt" type="button">
+          <svg class="ic" width="15" height="15"><use href="#i-plus"/></svg><span>新建自定义提示词</span>
+        </button>
+      </div>
+
+      <!-- 检索设置 -->
+      <div class="panel-body is-hidden" id="tabSettings">
+        <div class="set-group">
+          <div class="set-title">检索模式</div>
+          <div class="seg" id="setMode">
+            <button class="seg-btn" type="button" data-mode="demo">演示数据</button>
+            <button class="seg-btn" type="button" data-mode="live">实时检索</button>
+          </div>
+          <p class="set-hint">演示数据不联网、结果可控，适合第一次上课；实时检索会真的请求 GitHub 公开接口，失败自动回落到演示数据。</p>
+        </div>
+
+        <div class="set-group">
+          <div class="set-title">数据源（可多选）</div>
+          <label class="switch-row"><input type="checkbox" id="srcGithub" checked><span>GitHub 开源仓库</span></label>
+          <label class="switch-row"><input type="checkbox" id="srcWeb" checked><span>百科 / 技术网页</span></label>
+          <label class="switch-row"><input type="checkbox" id="srcPan" checked><span>网盘资源（含存活核验）</span></label>
+          <label class="switch-row"><input type="checkbox" id="srcKb" checked><span>我的知识库</span></label>
+        </div>
+
+        <div class="set-group">
+          <div class="set-title">JEV 判定</div>
+          <div class="field">
+            <label for="setThreshold">真伪阈值 <b id="thresholdVal">0.55</b></label>
+            <input type="range" id="setThreshold" min="0.3" max="0.9" step="0.05" value="0.55">
+            <p class="set-hint">低于阈值的信息会被 JEV 过滤掉。调高 = 更严格，但可能漏掉有价值的条目。</p>
+          </div>
+          <div class="field">
+            <label for="setJevBackend">判定引擎</label>
+            <select id="setJevBackend">
+              <option value="local">本地启发式（离线 · 确定性演示）</option>
+              <option value="onnx">浏览器 ONNX 模型（开源 local-jev 方案）</option>
+              <option value="remote">本地开源服务 / 官方 API（经代理）</option>
+            </select>
+            <p class="set-hint" id="jevBackendHint"></p>
+          </div>
+
+          <!-- 浏览器 ONNX（真实推理，无需服务端） -->
+          <div class="field is-hidden" id="jevOnnxField">
+            <label for="setOnnxModel">NLI 模型</label>
+            <input type="text" id="setOnnxModel" spellcheck="false" placeholder="MoritzLaurer/mDeBERTa-v3-base-mnli-xnli">
+            <div class="field-row">
+              <select id="setOnnxDtype" style="flex:1">
+                <option value="q8">q8（量化，小又快）</option>
+                <option value="fp16">fp16</option>
+                <option value="fp32">fp32（最准，最大）</option>
+              </select>
+              <select id="setOnnxSource" style="flex:1">
+                <option value="huggingface">HuggingFace 官方源</option>
+                <option value="hf-mirror">hf-mirror.com 镜像</option>
+              </select>
+            </div>
+            <div class="field-row">
+              <button class="btn btn-ghost btn-sm" id="btnLoadOnnx" type="button">加载 / 下载模型</button>
+              <span class="test-result" id="onnxStatus">未加载</span>
+            </div>
+            <p class="set-hint">首次需下载模型（约 200–300MB），之后走浏览器缓存。推理在本机完成、数据不出浏览器；WebGPU 不可用时自动回退 WASM。</p>
+          </div>
+
+          <!-- 本地开源服务 / 官方 API（经零依赖代理） -->
+          <div class="field is-hidden" id="jevRemoteField">
+            <label for="setJevEndpoint">JEV 服务地址</label>
+            <input type="text" id="setJevEndpoint" placeholder="http://127.0.0.1:8787/api/systemone" spellcheck="false">
+            <div class="field-row">
+              <button class="btn btn-ghost btn-sm" id="btnTestJev" type="button">测试连接</button>
+              <span class="test-result" id="jevTestResult"></span>
+            </div>
+            <p class="set-hint">代理兼容三种上游：<strong>ollaya</strong>（本地守护进程，wire-identical 于 TypeSafe）、<strong>TypeSafe 官方 API</strong>（需 Key）、任意 OpenAI 兼容或 passthrough 服务。API Key 只放在服务端 <code>.env</code>，浏览器永远拿不到。详见 <code>INSTALL.md</code>。</p>
+          </div>
+        </div>
+
+        <div class="set-group">
+          <div class="set-title">脱敏与安全</div>
+          <label class="switch-row"><input type="checkbox" id="maskPhone" checked><span>屏蔽手机号</span></label>
+          <label class="switch-row"><input type="checkbox" id="maskId" checked><span>屏蔽身份证号</span></label>
+          <label class="switch-row"><input type="checkbox" id="maskEmail" checked><span>屏蔽邮箱地址</span></label>
+          <label class="switch-row"><input type="checkbox" id="maskWechat" checked><span>屏蔽微信号 / QQ</span></label>
+          <label class="switch-row"><input type="checkbox" id="onlyHttps" checked><span>丢弃非 HTTPS 链接</span></label>
+        </div>
+
+        <div class="set-group">
+          <div class="set-title">对话习惯</div>
+          <label class="switch-row"><input type="checkbox" id="setSkipClarify"><span>跳过主动追问，直接检索</span></label>
+          <p class="set-hint">默认开启追问：需求含糊时我会先问一句，避免把检索额度花在错的方向上。</p>
+        </div>
+
+        <button class="btn btn-ghost btn-block" id="btnResetSettings" type="button">恢复默认设置</button>
+      </div>
+
+      <!-- 框架小课 -->
+      <div class="panel-body is-hidden" id="tabLearn">
+        <div class="learn">
+          <h3>为什么是「对话」而不是「画布」？</h3>
+          <p>画布适合“我已经知道流程长什么样”的人。新手更需要先把<strong>框架意识</strong>长出来：需求 → 检索 → 判断 → 排序 → 摘要。这一版把框架藏在对话背后，你只需要提问，但每一步都会展开给你看。</p>
+
+          <h3>JEV 是什么？</h3>
+          <p>JEV（TypeSafe System One）是一类“判断模型”：它<strong>不写文章</strong>，只回答一个被类型化的问题，返回概率或分数。三种原语：</p>
+          <ul class="learn-list">
+            <li><b>noul</b> — 是 / 否，返回 0-1 概率（这条信息是真的吗？）</li>
+            <li><b>score</b> — 打分，返回 2-10 分（这条有多符合需求？）</li>
+            <li><b>choice</b> — 单选，返回一个分类（这属于教程还是代码库？）</li>
+          </ul>
+          <p>所以写提示词时要写<strong>类型化问题</strong>，不要写“帮我分析一下”。这是本工作台反复演示的第一条工程习惯。</p>
+
+          <h3>一次调用，问三个问题</h3>
+          <p>官方 JEV 的形状是：<code>state</code> + 一组问题，**同一请求内并行**返回答案。所以本工作台对每条信息只发一次请求，同时问「真伪 / 匹配度 / 分类」，而不是发三次。加问题几乎不增加响应时间，但每多一条信息就多一次调用。</p>
+
+          <h3>判定引擎可以换</h3>
+          <ul class="learn-list">
+            <li><b>本地启发式</b> —— 离线、确定性，用来把流程跑通</li>
+            <li><b>浏览器 ONNX</b> —— 移植 local-jev：用 NLI 模型在本机真推理，零 Key、数据不出浏览器</li>
+            <li><b>本地开源服务 / 官方 API</b> —— ollaya（wire-identical 于 TypeSafe）或官方云端，经本地代理，Key 只在服务端</li>
+          </ul>
+          <p>切换后端不改流水线；真实后端挂了会自动回落启发式，并在界面上写清楚原因。</p>
+
+          <h3>判断与生成要分开</h3>
+          <p>先让 JEV 把噪音筛掉，再让大模型写摘要 —— 顺序反了就是“又当裁判又当选手”，既贵又不可审计。界面上每一步的耗时和判定分布都能展开看。</p>
+
+          <h3>阈值写在代码里</h3>
+          <p>模型只给概率，“过不过”由阈值决定。阈值是你能调的旋钮：调高更严格，调低更宽松。可复现、可解释。</p>
+
+          <h3>脱敏不是可选项</h3>
+          <p>手机号、身份证、邮箱、微信号在<strong>进入模型之前</strong>就被本地规则屏蔽。每次检索都会告诉你屏蔽了几处 —— 这就是合规的最小实践。</p>
+
+          <h3>三步练手建议</h3>
+          <ol class="learn-list">
+            <li>先点右侧「新手入门」里的模板，看完整条链路怎么跑。</li>
+            <li>把需求改得更具体，观察匹配分怎么变。</li>
+            <li>到「检索设置」里把阈值调到 0.8，再跑一次，看结果少掉多少。</li>
+          </ol>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- 通用弹层 -->
+<div class="modal-backdrop is-hidden" id="modalBackdrop">
+  <div class="modal" id="modal" role="dialog" aria-modal="true">
+    <div class="modal-head">
+      <h2 id="modalTitle">标题</h2>
+      <button class="icon-btn icon-btn-sm" id="btnModalClose" type="button" title="关闭">
+        <svg class="ic" width="16" height="16"><use href="#i-x"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<!-- ============ 脚本（经典脚本，无需构建，双击 index.html 即可运行） ============ -->
+<script src="js/core.js"></script>
+<script src="js/data.js"></script>
+<script src="js/kb.js"></script>
+<script src="js/jev-protocol.js"></script>
+<script src="js/jev-onnx.js"></script>
+<script src="js/jev.js"></script>
+<script src="js/sources.js"></script>
+<script src="js/pipeline.js"></script>
+<script src="js/promptlib.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
